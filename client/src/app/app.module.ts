@@ -7,6 +7,10 @@ import { HeaderComponent } from './component/dumb/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountComponent } from './component/smart/account/account.component';
 import { ContractsComponent } from './component/smart/contracts/contracts.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,14 @@ import { ContractsComponent } from './component/smart/contracts/contracts.compon
     AccountComponent,
     ContractsComponent,
   ],
-  imports: [BrowserModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,
