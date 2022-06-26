@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { from } from 'rxjs';
+import { BehaviorSubject, from, switchMap } from 'rxjs';
 import { Web3Provider } from '../../../providers/web3-provider';
 import { ethers } from 'ethers';
 import { greetingAbi } from './contracts.common';
+import { formatBigNumber } from '../../../utils/common-operators.functions';
 
 @Component({
   selector: 'app-contracts',
@@ -11,27 +12,41 @@ import { greetingAbi } from './contracts.common';
 })
 export class ContractsComponent {
   public readonly contractAddress =
-    '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
-  public readonly contractBalance$ = from(
-    this.provider.getBalance(this.contractAddress)
-  );
+    '0x5FbDB2315678afecb367f032d93F642f64180aa3';
   private readonly contract = new ethers.Contract(
     this.contractAddress,
     greetingAbi,
     this.provider.getSigner()
   );
-  public readonly contractGreeting$ = from(this.contract.functions['greet']());
+
+  private readonly changesSubject = new BehaviorSubject('');
+  private readonly changes$ = this.changesSubject.asObservable();
+
+  public readonly contractGreeting$ = this.changes$.pipe(
+    switchMap(() => from(this.contract.functions['greet']()))
+  );
+  public readonly contractBalance$ = this.changes$.pipe(
+    switchMap(() => from(this.provider.getBalance(this.contractAddress))),
+    formatBigNumber()
+  );
 
   constructor(private readonly provider: Web3Provider) {}
 
-  async onGreetingSubmit(value: string) {
+  async onGreetingSubmit(value: string, element: HTMLInputElement) {
     const setGreeting = await this.contract.functions['setGreeting'](value);
     await setGreeting.wait();
+
+    this.changesSubject.next('onGreetingSubmit');
+    element.value = '';
   }
 
-  async onDepositSubmit(ether: string) {
+  async onDepositSubmit(ether: string, element: HTMLInputElement) {
     const value = ethers.utils.parseEther(ether);
 
-    await this.contract.functions['deposit']({ value });
+    const deposit = await this.contract.functions['deposit']({ value });
+    await deposit.wait();
+
+    this.changesSubject.next('onDepositSubmit');
+    element.value = '';
   }
 }
