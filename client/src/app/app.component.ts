@@ -12,15 +12,18 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'client';
-
-  signer = this.provider.getSigner();
-
-  accounts$ = from(this.provider.listAccounts()).pipe(firstAccount());
-
-  balance$ = this.accounts$.pipe(
+  public readonly accounts$ = from(this.provider.listAccounts()).pipe(
+    firstAccount()
+  );
+  public readonly balance$ = this.accounts$.pipe(
     switchMap((accountNumber) => from(this.provider.getBalance(accountNumber))),
     formatBigNumber()
+  );
+  // private readonly signer = this.provider.getSigner();
+
+  public readonly contract = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+  public readonly contractBalance$ = from(
+    this.provider.getBalance(this.contract)
   );
 
   constructor(private readonly provider: Web3Provider) {}
