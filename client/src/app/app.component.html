@@ -2,13 +2,9 @@
 
 <div class="content" role="main">
 
-  <div class="card highlight-card">
-    <span>Account "{{accounts$ | async}}": {{balance$ | async}} ETH!</span>
-  </div>
+  <app-account></app-account>
 
-  <h2>Smart Contracts</h2>
-  <h5>Contract ({{contract}}) balance: {{contractBalance$ | async}} ETH</h5>
-
+  <app-contracts></app-contracts>
 
   <svg height="485.677" id="clouds" viewBox="0 0 2611.084 485.677" width="2611.084" xmlns="http://www.w3.org/2000/svg">
     <title>Gray Clouds Background</title>
@@ -18,6 +14,5 @@
       fill="#eee"
       id="Path_39" transform="translate(142.69 -634.312)"/>
   </svg>
-
 </div>
 

@@ -21,5 +21,5 @@ contract Greeter {
     }
 
     // Custom function to deposit fund to the contract
-    function deposit() payable public {}
+    function deposit() public payable {}
 }

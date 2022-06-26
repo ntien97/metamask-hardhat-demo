@@ -1,5 +1,9 @@
 {
   "license": "MIT",
+  "scripts": {
+    "format:write": "yarn prettier '**/*.{json,sol,md,ts,scss}' --write",
+    "format:check": "yarn prettier '**/*.{json,sol,md,ts,scss}' --check"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-etherscan": "^3.0.0",

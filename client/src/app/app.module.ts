@@ -5,9 +5,16 @@ import { AppComponent } from './app.component';
 import { enableWeb3Provider, WEB3PROVIDER } from './providers/web3-provider';
 import { HeaderComponent } from './component/dumb/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AccountComponent } from './component/smart/account/account.component';
+import { ContractsComponent } from './component/smart/contracts/contracts.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    AccountComponent,
+    ContractsComponent,
+  ],
   imports: [BrowserModule, BrowserAnimationsModule],
   providers: [
     {
