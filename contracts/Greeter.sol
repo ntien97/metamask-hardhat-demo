@@ -19,4 +19,7 @@ contract Greeter {
         console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
     }
+
+    // Custom function to deposit fund to the contract
+    function deposit() payable public {}
 }
